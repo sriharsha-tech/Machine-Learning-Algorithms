@@ -49,3 +49,25 @@ def extractData(info):
 
 # Print input training points
 # params: start, end - indexes for range to print
+
+def absoluteDistance(a, b):
+    d = 0
+    for i in range(dimS, dimE):
+        d += abs(a[i] - b[i])
+
+    return d
+
+# Finds k nearest neighbors
+# params: testValue - value to test for
+# returns: k nearest neighbors [value, distance, [dimensions]
+def kNeighbors(testValue, k):
+    distances = []
+    for trainValue in trainingPoints[trainS:trainE]:
+        # find distance from test point to each training point
+        distances.append([euclideanDistance(testValue, trainValue), trainValue[0]])
+    
+    # sort to get nearest neighbors
+    distances.sort(key = itemgetter(0))
+    
+    # return k nearest neighbors
+    return distances[:k]
